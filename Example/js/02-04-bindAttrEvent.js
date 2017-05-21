@@ -1,0 +1,55 @@
+(function(window){
+  var data = {
+    imgList:[
+      {
+        src:"images/children/0.jpg",
+        color:"red",
+        disabled:false
+      },
+      {
+        src:"images/children/1.jpg",
+        color:"orange",
+        disabled:false
+      },
+      {
+        src:"images/children/2.jpg",
+        color:"yellow",
+        disabled:false
+      },
+      {
+        src:"images/children/3.jpg",
+        color:"green",
+        disabled:false
+      },
+      {
+        src:"images/children/4.jpg",
+        color:"cyan",
+        disabled:false
+      },
+      {
+        src:"images/children/5.jpg",
+        color:"blue",
+        disabled:true
+      },
+      {
+        src:"images/children/6.jpg",
+        color:"purple",
+        disabled:false
+      },
+      {
+        src:"images/children/7.jpg",
+        color:"pink",
+        disabled:false
+      },
+    ]
+  }
+  var vm = new Vue({
+    el:'#app',
+    data:data,
+    methods:{
+      switchDisable:function(index){
+        this.imgList[index].disabled = !this.imgList[index].disabled
+      }
+    }
+  })
+})(window)

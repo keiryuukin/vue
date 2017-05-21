@@ -1,0 +1,20 @@
+{
+	"auto_complete_selector": true,
+	"auto_complete_triggers":
+	[
+		{
+			"characters": "/",
+			"selector": "string.quoted.double.html,string.quoted.single.html, source.css"
+		}
+	],
+	"font_size": 16,
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	"preview_on_click": false,
+	"tab_size": 2,
+	"theme": "Seti_orig.sublime-theme",
+	"translate_tabs_to_spaces": true,
+	"word_wrap": true
+}

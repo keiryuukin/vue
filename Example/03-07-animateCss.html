@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>03-06-mixin</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/layout.css">
+  <link rel="stylesheet" type="text/css" href="css/animate.min.css">
+  <style type="text/css">
+    [v-cloak]{
+      display: none;
+    }
+    body{
+      text-align: center;
+    }
+    a{
+      display: inline-block;
+      text-decoration: none;
+      color: #0769AD;
+      background-color: #ffffff;
+      padding: 5px 10px;
+      font-size: 12px;
+      line-height: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <transition
+      enter-to-class="animated"
+      leave-to-class="animated"
+      enter-active-class="tada"
+      leave-active-class="tada">
+      <img :src="src" v-if="show">
+    </transition>
+    <br>
+    <a href="javascript:;" @click="switchHandler">Switch</a>
+  </div>
+  <script src="js/vue.js"></script>
+  <script src="js/superagent.js"></script>
+  <script>
+    (function(window){
+      var data = {
+        src:"./images/children/0.jpg",
+        show:true
+      }
+      var vm = new Vue({
+        el:"#app",
+        data:data,
+        methods:{
+          switchHandler:function(){
+            this.show = !this.show
+          }
+        }
+      })
+    })(window)
+  </script>
+</body>
+</html>

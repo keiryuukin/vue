@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>03-10-dataTween</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/layout.css">
+  <style type="text/css">
+    [v-cloak] {
+      display: none;
+    }
+
+    body {
+      text-align: center;
+    }
+
+    a {
+      display: inline-block;
+      text-decoration: none;
+      color: #40c297;
+      background-color: #ffffff;
+      padding: 5px 10px;
+      font-size: 12px;
+      line-height: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app" v-cloak>
+    <h1 :style="{
+      width:watchPoint+'px',
+      backgroundColor:'hsl('+watchPoint+', 100%, 50%)'}
+    ">{{watchPoint}}</h1>
+    <a href="javascript:;" @click="change(+100)">+100</a>
+    <a href="javascript:;" @click="change(-100)">-100</a>
+  </div>
+  <script src="js/vue.js"></script>
+  <script src="js/Tween.js"></script>
+  <script>
+    (function (window) {
+      var data = {
+        update: true,
+        tween: {
+          point: 100
+        },
+        target: {
+          point: 100
+        },
+        watchPoint: 100
+      }
+      var vm = new Vue({
+        el: '#app',
+        data: data,
+        methods: {
+          change: function (n) {
+            this.target.point += n
+            if (this.target.point < 0) this.target.point = 0
+            this.dataTween.stop().start()
+          }
+        },
+        mounted: function () {
+          var self = this
+          this.dataTween = new TWEEN.Tween(this.tween).to(this.target, 1000);
+          this.dataTween.onUpdate(function () {
+            data.watchPoint = data.tween.point.toFixed(0)
+          });
+          function animate(time) {
+            if (self.update) {
+              requestAnimationFrame(animate)
+            }
+            TWEEN.update(time)
+          }
+          animate()
+        },
+        beforeDestroy: function () {
+          this.update = false
+        }
+      })
+    })(window)
+  </script>
+</body>
+
+</html>

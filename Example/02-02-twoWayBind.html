@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>02-02-twoWayBind</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/layout.css">
+  <style type="text/css">
+    [v-cloak]{
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <!-- <h1 v-text="message"></h1>
+    <h1 v-html="message"></h1> -->
+    <h1>{{ message }}</h1>
+    <input type="text" v-model="message">
+  </div>
+  <script src="js/vue.js"></script>
+  <script>
+    (function(window){
+      var data = {
+        message:'Hello Vue!!!'
+      }
+      var vm = new Vue({
+        el:'#app',
+        data:data
+      })
+    })(window)
+  </script>
+</body>
+</html>

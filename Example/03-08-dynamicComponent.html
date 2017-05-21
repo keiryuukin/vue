@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>03-05-alphaShow</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/site.css">
+  <style type="text/css">
+    .active{
+      font-weight: bolder;
+      color: #ffffff;
+      background-color: #40c297;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <header>
+      <h1>Flycan 飛肯設計學苑</h1>
+      <div>
+        <a href="javascript:;"
+          v-for="item in menu" 
+          :class="{active:view == item.name}"
+          @click="view=item.name">
+          {{item.text}}
+        </a>
+      </div>
+    </header>
+    <transition
+      @before-enter="beforeEnter"
+      @enter="enter"
+      @after-enter="afterEnter"
+      @leave="leave"
+      @after-leave="afterLeave"
+      :css="false">
+      <component v-bind:is="view"></component>
+    </transition>
+  </div>
+  <script src="js/vue.js"></script>
+  <script src="js/velocity.min.js"></script>
+  <script>
+    (function(window){
+      new Vue({
+        el: '#app',
+        data: {
+          view: 'index',
+          menu:[
+            {text:'首頁',name:'index'},
+            {text:'課程',name:'course'},
+            {text:'聯絡',name:'contact'},
+          ]
+        },
+        components: {
+          'index': {
+            template: `
+              <div class="page">
+                <h2>首頁組件</h2>
+              </div>
+            `
+          },
+          'course': {
+            template: `
+              <div class="page">
+                <h2>課程組件</h2>
+              </div>
+            `
+          },
+          'contact': {
+            template: `
+              <div class="page">
+                <h2>聯絡組件</h2>
+              </div>
+            `
+          },
+        },
+        methods: {
+          beforeEnter: function (el) {
+            el.style.opacity = 0
+            el.style.position = 'absolute'
+          },
+          enter: function (el, done) {
+            Velocity(el, { opacity: 1 }, { duration: 500 ,
+              complete: done })
+          },
+          afterEnter: function (el, done) {
+            el.style.cssText = ''
+          },
+          leave: function (el, done) {
+            Velocity(el, { opacity: 0 }, { duration: 500 ,
+              complete: done })
+          },
+          afterLeave: function (el, done) {
+            console.log('component out')
+          }
+        }
+      })
+    })(window)
+  </script>
+</body>
+</html>

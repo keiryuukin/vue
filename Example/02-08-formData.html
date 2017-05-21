@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>02-08-formData</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/layout.css">
+  <style type="text/css">
+    [v-cloak]{
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <p>姓名：<input type="text" v-model="formData.name"></p>
+    <p>
+      性別：
+      <label v-for="item in sex">
+        <input type="radio" :value="item.value" v-model="formData.sex">
+        {{item.text}}
+      </label>
+    </p>
+    <p>
+      參加過那些課程？<br/>
+      <label v-for="item in join">
+        <input type="checkbox" :value="item.value" v-model="formData.join">
+        {{item.text}}
+      </label>
+    </p>
+    <p v-if="joined">
+      最喜歡哪門課？<br/>
+      <label v-for="item in joined">
+        <input type="radio" :value="item.value" v-model="formData.fav">
+        {{item.text}}
+      </label>
+    </p>
+    <p>
+      第幾次來飛肯：
+      <select v-model="formData.times">
+        <option v-for="item in times" :value="item.value">
+          {{item.text}}
+        </option>
+      </select>
+    </p>
+    <p>
+      <label>
+        <input type="checkbox" v-model="formData.edm">
+        訂閱電子報
+      </label>
+    </p>
+    <hr>
+    {{ formData }}
+  </div>
+  <script src="js/vue.js"></script>
+  <script>
+    (function(window){
+      var data={
+        formData:{
+          name:'',
+          sex:0,
+          join:[],
+          fav:null,
+          times:0,
+          edm:false
+        },
+        sex:[
+          {text:'女',value:0},
+          {text:'男',value:1}
+        ],
+        join:[
+          {text:'Sass & Compass',value:0},
+          {text:'javascript & jQuery',value:1},
+          {text:'jQuery DOM',value:2},
+          {text:'Vue.js',value:3},
+          {text:'PHP & MySQL',value:4}
+        ],
+        times:[
+          {text:'第一次',value:0},
+          {text:'五次以內',value:1},
+          {text:'五次到十次',value:2},
+          {text:'十次以上',value:3}
+        ]
+      }
+      var vm = new Vue({
+        el:'#app',
+        data:data,
+        computed:{
+          joined:function(){
+            var self = this
+            var ary = []
+            var favStatus = false
+            self.formData.join.forEach(function(index){
+              if(self.formData.fav == index) favStatus = true
+              ary.push(self.join[index])
+            })
+            if(!favStatus) self.formData.fav = null
+            return ary.length > 0 ? ary.sort(function(a,b){
+              return a.value - b.value
+            }) : null
+          }
+        }
+      })
+    })(window)
+  </script>
+</body>
+</html>

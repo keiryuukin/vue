@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>03-03-propsEmit</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/layout.css">
+  <style type="text/css">
+    [v-cloak]{
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <counter :count="count" @increment="count++"></counter>
+    <counter :count="count" @increment="count++"></counter>
+    <counter :count="count" @increment="count++"></counter>
+  </div>
+  <script src="js/vue.js"></script>
+  <script>
+    var data = {
+      count:0
+    }
+    Vue.component('counter',{
+      props:['count'],
+      template:`
+        <input type="button" :value="count"
+          @click="$emit('increment')">
+      `
+    })
+    var vm = new Vue({
+      el:'#app',
+      data:data
+    })
+  </script>
+</body>
+</html>

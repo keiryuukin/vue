@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>02-01-dataBind</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/layout.css">
+  <style type="text/css">
+    [v-cloak]{
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <h1 v-text="message"></h1>
+  </div>
+  <script src="js/vue.js"></script>
+  <script>
+    var data = {
+      message:'Hello Vue!!!'
+    }
+    var vm = new Vue({
+      el:'#app',
+      data:data
+    })
+  </script>
+</body>
+</html>

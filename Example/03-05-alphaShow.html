@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>03-05-alphaShow</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/layout.css">
+  <link rel="stylesheet" type="text/css" href="css/03-05-alphaShow.css">
+</head>
+<body>
+  <div id="app" v-cloak>
+    <div class="container" v-if="imgList.length">
+      <alpha-component
+        :active="active"
+        :list="imgList"
+        @next="nextHandler">
+      </alpha-component>
+      <nav-component
+        :active="active"
+        :total="imgList.length"
+        @change="changeHandler">
+      </nav-component>
+    </div>
+  </div>
+  <script src="js/vue.js"></script>
+  <script src="js/superagent.js"></script>
+  <script src="js/03-05-alphaShow.js"></script>
+</body>
+</html>

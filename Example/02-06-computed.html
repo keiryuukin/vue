@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>02-06-computed</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/layout.css">
+  <style type="text/css">
+    [v-cloak]{
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" v-cloak>
+    名字：<input type="text" v-model="firstName"><br/>
+    姓氏：<input type="text" v-model="lastName"><br/>
+    全名：<input type="text" v-model="fullName">
+  </div>
+  <script src="js/vue.js"></script>
+  <script>
+    (function(window){
+      var data = {
+        firstName:'Alex',
+        lastName:'Chen',
+        // fullName:'Alex Chen'
+      }
+      var vm = new Vue({
+        el:'#app',
+        data:data,
+        computed:{
+          fullName:function(){
+            console.log('computed')
+            return this.firstName + ' ' + this.lastName
+          }
+        },
+        // methods:{
+        //   fullName:function(){
+        //     console.log('methods')
+        //     return this.firstName + ' ' + this.lastName
+        //   }
+        // },
+        // watch:{
+        //   firstName:function(value){
+        //     this.fullName = value + ' ' + this.lastName
+        //   },
+        //   lastName:function(value){
+        //     this.fullName = value + ' ' + this.lastName
+        //   }
+        // }
+      })
+    })(window)
+  </script>
+</body>
+</html>

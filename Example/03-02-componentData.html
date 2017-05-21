@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>03-02-componentData</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/layout.css">
+  <style type="text/css">
+    [v-cloak]{
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <counter></counter>
+    <counter></counter>
+    <counter></counter>
+  </div>
+  <script src="js/vue.js"></script>
+  <script>
+    // var data = {
+    //   count:0
+    // }
+    var data = function(){
+      return {
+        count:0
+      }
+    }
+    Vue.component('counter',{
+      data:data,
+      template:`
+        <input type="button" :value="count"
+          @click="count++">
+      `
+    })
+    var vm = new Vue({
+      el:'#app',
+    })
+  </script>
+</body>
+</html>

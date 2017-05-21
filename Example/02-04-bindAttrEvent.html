@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>02-04-bindAttrEvent</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/layout.css">
+  <link rel="stylesheet" type="text/css" href="css/02-04-bindAttrEvent.css">
+</head>
+<body>
+  <div id="app" v-cloak>
+    <div class="img" v-for="(item,index) in imgList"
+      v-bind:style="{borderColor:item.color}"
+      v-on:dblclick="switchDisable(index)">
+      <img v-bind:src="item.src" width="100%">
+      <div class="mask" v-bind:style="{display : item.disabled ? 'block' : 'none'}"></div>
+    </div>
+  </div>
+  <script src="js/vue.js"></script>
+  <script src="js/02-04-bindAttrEvent.js"></script>
+</body>
+</html>

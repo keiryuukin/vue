@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>04-01-router</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/site.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>Flycan 飛肯設計學苑</h1>
+      <div>
+        <router-link to="/" exact>
+          首頁
+        </router-link>
+        <router-link to="/course">
+          課程
+        </router-link>
+        <router-link to="/contact">
+          聯絡
+        </router-link>
+      </div>
+    </header>
+    <router-view></router-view>
+  </div>
+  <script src="js/vue.js"></script>
+  <script src="js/vue-router.js"></script>
+  <script>
+    (function(window){
+
+      var index = {
+        template: `
+          <div class="page">
+            <h2>首頁組件</h2>
+          </div>
+        `
+      }
+      var course = {
+        template: `
+          <div class="page">
+            <h2>課程組件</h2>
+          </div>
+        `
+      }
+      var contact = {
+        template: `
+          <div class="page">
+            <h2>聯絡組件</h2>
+          </div>
+        `
+      }
+
+      var router = new VueRouter({
+        routes :[
+          { path: '/', component: index },
+          { path: '/course', component: course },
+          { path: '/contact', component: contact }
+        ]
+      })
+
+      new Vue({
+        el:'#app',
+        router:router
+      })
+
+    })(window)
+  </script>
+</body>
+</html>

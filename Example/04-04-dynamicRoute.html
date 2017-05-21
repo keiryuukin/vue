@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>04-04-dynamicRoute</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/site.css">
+  <link rel="stylesheet" type="text/css" href="css/siteTransition.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>Flycan 飛肯設計學苑</h1>
+      <div>
+        <router-link v-for="item in menu"
+          :to="{ name: item.name }"
+          :exact="item.name == 'index'">
+          {{item.text}}
+        </router-link>
+      </div>
+    </header>
+    <transition :name="transitionName" mode="out-in" appear>
+      <router-view></router-view>
+    </transition>  
+  </div>
+  <script src="js/vue.js"></script>
+  <script src="js/vue-router.js"></script>
+  <script src="js/04-04-dynamicRoute.js"></script>
+</body>
+</html>

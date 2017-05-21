@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>05-03-mutations</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/layout.css">
+  <style type="text/css">
+    [v-cloak]{
+      display: none;
+    }
+    body{
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <message></message>
+    <br>
+    <counter></counter>
+  </div>
+  <script src="js/vue.js"></script>
+  <script src="js/vuex.js"></script>
+  <script>
+    var messageModule = {
+      state:{
+        message: 'Hello Vue!!!'
+      },
+      mutations:{
+        'message/CHANGE':function(state,data){
+          state.message = data
+        }
+      }
+    }
+    var counterModule = {
+      state:{
+        count: 0
+      },
+      mutations:{
+        'counter/CHANGE':function(state,data){
+          state.count = data
+        },
+        'counter/INCREMENT':function(state){
+          state.count++
+        },
+        'counter/DECREMENT':function(state){
+          state.count--
+        }
+      }
+    }
+
+    var store = new Vuex.Store({
+      strict: true,
+      modules: {
+        message: messageModule
+      }
+    })
+    store.registerModule('counter',counterModule)
+    // store.unregisterModule('counter')
+
+    Vue.component('message',{
+      template:`
+        <div>
+          <h1>{{ message }}</h1>
+          <input type="text" v-model="message">
+        </div>
+      `,
+      computed:{
+        message:{
+          get:function(){
+            return this.$store.state.message.message
+          },
+          set:function(val){
+            this.$store.commit('message/CHANGE',val)
+          }
+        }
+      }
+    })
+
+    Vue.component('counter',{
+      template:`
+        <div>
+          <input type="text" v-model="count">
+          <p>
+            <input type="button" value="+"
+              @click="increment">
+            <input type="button" value="-"
+              @click="decrement">
+          </p>
+        </div>
+      `,
+      computed:{
+        count:{
+          get:function(){
+            return this.$store.state.counter.count
+          },
+          set:function(val){
+            this.$store.commit('counter/CHANGE',val)
+          }
+        }
+      },
+      methods:{
+        increment:function(){
+          this.$store.commit('counter/INCREMENT')
+        },
+        decrement:function(){
+          this.$store.commit('counter/DECREMENT')
+        }
+      }
+    })
+    
+    var vm = new Vue({
+      el:'#app',
+      store:store
+    })
+  </script>
+</body>
+</html>

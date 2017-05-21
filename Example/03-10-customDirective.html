@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>03-10-customDirective</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/layout.css">
+  <style type="text/css">
+    [v-cloak]{
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <input-component :status="disabled">
+    </input-component>
+    <input type="button" value="Button"
+      v-lock="disabled"
+      @click="switchHandler">
+      <br>
+    <input-component :status="!disabled">
+    </input-component>
+    <input type="button" value="Button"
+      v-lock="!disabled"
+      @click="switchHandler">
+  </div>
+  <script src="js/vue.js"></script>
+  <script>
+    var data = {
+      disabled:true
+    }
+    Vue.directive('lock',function(el,binding){
+      el.disabled = binding.value
+    })
+    var inputComponent = {
+      props:['status'],
+      template:`
+        <input type="text" v-lock="status">
+      `
+    }
+    var vm = new Vue({
+      el:'#app',
+      data:data,
+      components:{
+        inputComponent:inputComponent
+      },
+      methods:{
+        switchHandler:function(){
+          this.disabled = !this.disabled
+        }
+      }
+    })
+  </script>
+</body>
+</html>

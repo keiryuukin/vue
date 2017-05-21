@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>03-06-mixin</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/layout.css">
+  <link rel="stylesheet" type="text/css" href="css/03-06-mixin.css">
+</head>
+<body>
+  <div id="app" v-cloak>
+    <div class="container" v-if="imgList.length">
+      <slide-component
+        :active="slide"
+        :list="imgList"
+        @next="nextHandler('slide')">
+      </slide-component>
+      <nav-component
+        :active="slide"
+        :total="imgList.length"
+        @change="changeHandler($event,'slide')">
+      </nav-component>
+    </div>
+    <div class="container" v-if="imgList.length">
+      <alpha-component
+        :active="alpha"
+        :list="imgList"
+        @next="nextHandler('alpha')">
+      </alpha-component>
+      <nav-component
+        :active="alpha"
+        :total="imgList.length"
+        @change="changeHandler($event,'alpha')">
+      </nav-component>
+    </div>
+  </div>
+  <script src="js/vue.js"></script>
+  <script src="js/superagent.js"></script>
+  <script src="js/03-06-mixin.js"></script>
+</body>
+</html>

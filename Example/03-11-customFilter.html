@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>03-11-customFilter</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/layout.css">
+  <style type="text/css">
+    [v-cloak]{
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <h1>Origenal：{{message}}</h1>
+    <h1>FirstUpperComputed：{{upperFirstMessage}}</h1>
+    <h1>LowerMethod：{{lowercase(message)}}</h1>
+    <h1>UpperFilter：{{ message | uppercase}}</h1>
+  </div>
+  <script src="js/vue.js"></script>
+  <script>
+    Vue.filter('uppercase',function(value){
+      return value.toUpperCase()
+    })
+    var data = {
+      message:'Hello Vue!!!'
+    }
+    var vm = new Vue({
+      el:'#app',
+      data:data,
+      computed:{
+        upperFirstMessage:function(){
+          return this.message.substr(0,1).toUpperCase() + 
+            this.lowercase(this.message.substr(1))
+        }
+      },
+      methods:{
+        lowercase:function(value){
+          return value.toLowerCase()
+        }
+      }
+    })
+  </script>
+</body>
+</html>

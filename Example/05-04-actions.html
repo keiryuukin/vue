@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>05-04-actions</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/layout.css">
+  <style type="text/css">
+    [v-cloak]{
+      display: none;
+    }
+    body{
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <h1>{{ message }}</h1>
+    <input type="text" v-model.trim="message">
+    <p>====================</p>
+    <message></message>
+  </div>
+  <script src="js/vue.js"></script>
+  <script src="js/vuex.js"></script>
+  <script src="js/promise.min.js"></script>
+  <script>
+    var store = new Vuex.Store({
+      strict: true,
+      state: {
+        message: 'Hello Vue!!!'
+      },
+      mutations:{
+        change:function(state,data){
+          state.message = data
+        }
+      },
+      actions:{
+        change:function(context,data){
+          return new Promise((resolve, reject) => {
+            setTimeout(function() {
+              context.commit('change',data)
+              resolve()
+            }, 1000)
+          })
+        }
+      }
+    })
+
+    var storeMixin = {
+      computed:{
+        message:{
+          get:function(){
+            return this.$store.state.message
+          },
+          set:function(val){
+            this.$store.dispatch('change', val)
+            .then(function(){
+              console.log('actions complete')
+            })
+          }
+        }
+      }
+    }
+    var messageInput = {
+      mixins: [storeMixin],
+      template:`
+        <input type="text" v-model.trim.lazy="message">
+      `
+    }
+    Vue.component('message',{
+      mixins: [storeMixin],
+      components:{
+        messageInput:messageInput
+      },
+      template:`
+        <div>
+          <h1>{{ message }}</h1>
+          <message-input></message-input>
+        </div>
+      `
+    })
+    
+    var vm = new Vue({
+      mixins: [storeMixin],
+      el:'#app',
+      store:store
+    })
+  </script>
+</body>
+</html>

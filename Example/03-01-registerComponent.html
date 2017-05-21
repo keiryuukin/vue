@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>03-01-registerComponent</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/layout.css">
+  <style type="text/css">
+    [v-cloak]{
+      display: none;
+    }
+    .global{
+      color: blue
+    }
+    .local{
+      color: red
+    }
+    .local .global{
+      color: red
+    }
+  </style>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <global-component></global-component>
+    <local-component></local-component>
+  </div>
+  <script src="js/vue.js"></script>
+  <script>
+    Vue.component('globalComponent',{
+      template:`
+        <div class="global">
+          globalComponent
+        </div>
+      `
+    })
+    var localComponent = {
+      template: `
+        <div class="local">
+          <h1>localComponent</h1>
+          <global-component></global-component>
+        </div>
+      `
+    }
+    var vm = new Vue({
+      el:'#app',
+      components:{
+        localComponent:localComponent
+      }
+    })
+  </script>
+</body>
+</html>

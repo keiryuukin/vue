@@ -1,0 +1,53 @@
+html{
+  width: 100%;
+  min-height: 100%;
+  font-size: 16px;
+  color: white;
+  background-color: #40c297;
+}
+[v-cloak]{
+  display: none;
+}
+body{
+  text-align: center;
+}
+a{
+  display: inline-block;
+  text-decoration: none;
+  color: #40c297;
+  background-color: #ffffff;
+  border:1px solid;
+  margin: 0 10px;
+  padding: 10px 20px;
+  font-size: 14px;
+  line-height: 20px;
+}
+.router-link-active{
+  font-weight: bolder;
+  color: #ffffff;
+  background-color: #40c297;
+}
+header{
+  position: fixed;
+  z-index: 999;
+  width: 100%;
+  height: 130px;
+  top: 0;
+  left: 0;
+  color: #40c297;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px #000;
+}
+.page{
+  position: relative;
+  width: 100%;
+  height: 2000px;
+  padding-top: 200px;
+  background-color: rgba(0,0,0,0.5);
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}

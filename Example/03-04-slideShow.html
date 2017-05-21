@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>03-04-slideShow</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/layout.css">
+  <link rel="stylesheet" type="text/css" href="css/03-04-slideShow.css">
+</head>
+<body>
+  <div id="app" v-cloak>
+    <div class="container" v-if="imgList.length">
+      <slide-component
+        :active="active"
+        :list="imgList"
+        @next="nextHandler">
+      </slide-component>
+      <nav-component
+        :active="active"
+        :total="imgList.length"
+        @change="changeHandler">
+      </nav-component>
+    </div>
+  </div>
+  <script src="js/vue.js"></script>
+  <script src="js/superagent.js"></script>
+  <script src="js/03-04-slideShow.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>05-01-observer</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/layout.css">
+  <style type="text/css">
+    [v-cloak]{
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <counter></counter>
+    <counter></counter>
+    <counter></counter>
+  </div>
+  <script src="js/vue.js"></script>
+  <script>
+    var data = function(){
+      return {
+        count:0
+      }
+    }
+    var emitter = new Vue()
+    Vue.component('counter',{
+      data:data,
+      template:`
+        <input type="button" :value="count"
+          @click="incrementEmit">
+      `,
+      methods:{
+        incrementEmit:function(){
+          emitter.$emit('increment')
+        },
+        incrementHandler:function(){
+          this.count++;
+        }
+      },
+      created:function(){
+        emitter.$on('increment',this.incrementHandler)
+      }
+    })
+    var vm = new Vue({
+      el:'#app'
+    })
+  </script>
+</body>
+</html>

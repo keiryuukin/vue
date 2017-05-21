@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>04-05-nestRoute</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/site.css">
+  <link rel="stylesheet" type="text/css" href="css/siteTransition.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>Flycan 飛肯設計學苑</h1>
+    </header>
+    <transition name="fade" mode="out-in" appear>
+      <router-view></router-view>
+    </transition>  
+  </div>
+  <script src="js/vue.js"></script>
+  <script src="js/vue-router.js"></script>
+  <script>
+    (function(window){
+      var contact = {
+        template: `
+          <div class="page">
+            <h2>聯絡組件</h2>
+            <router-link to="/contact/phone">電話</router-link>
+            <router-link to="/contact/address">地址</router-link>
+            <router-link to="/contact/email">電子郵件</router-link>
+            <transition name="fade" mode="out-in" appear>
+              <router-view></router-view>
+            </transition>
+          </div>
+        `
+      }
+      var phone = {
+        template: `
+          <p>（02）2370-1122</p>
+        `
+      }
+      var address = {
+        template: `
+          <p>台北市公園路 30-1 號 5 樓</p>
+        `
+      }
+      var email = {
+        template: `
+          <p>service@flycan.com.tw</p>
+        `
+      }
+
+      var router = new VueRouter({
+        routes :[
+          {
+            name: 'contact',
+            path: '/contact',
+            component: contact,
+            children:[
+              {
+                path:'',
+                redirect: 'phone' 
+              },
+              {
+                path:'phone',
+                component:phone
+              },
+              {
+                path:'address',
+                component:address
+              },
+              {
+                path:'email',
+                component:email
+              },
+            ]
+           },
+          { path: '*', redirect: '/contact' }
+        ]
+      })
+
+      new Vue({
+        el:'#app',
+        router:router
+      })
+    })(window)
+  </script>
+</body>
+</html>

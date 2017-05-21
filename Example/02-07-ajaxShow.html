@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>02-07-ajaxShow</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/layout.css">
+  <style type="text/css">
+    [v-cloak]{
+      display: none;
+    }
+    .img{
+      position: relative;
+      width: 550px;
+      height: 300px;
+    }
+    .img > img{
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .nav{
+      text-align: center
+    }
+    .nav > a{
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border-radius: 10px;
+      margin: 5px;
+      background-color: white;
+    }
+    .nav > a.active{
+      background-color: black;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <div id="container"
+      v-if="imgList.length"
+      @mouseenter="clearHandler"
+      @mouseleave="setHandler">
+      <div class="img">
+        <img :src="imgSrc">
+      </div>
+      <div class="nav">
+        <a href="javascript:;" v-for="(item,index) in imgList"
+          :class="{active : active == index}"
+          @click="clickHandler(index)"></a>
+      </div>
+    </div>
+  </div>
+  <script src="js/vue.js"></script>
+  <script src="js/superagent.js"></script>
+  <script>
+    (function(window){
+      var data = {
+        active:0,
+        imgList:[]
+      }
+      var timer,interval=2000
+      var vm = new Vue({
+        el:"#app",
+        data:data,
+        computed:{
+          imgSrc:function(){
+            return this.imgList[this.active].src
+          }
+        },
+        methods:{
+          clickHandler:function(index){
+            this.active = index
+          },
+          nextHandler:function(){
+            this.active = (this.active + 1) % this.imgList.length
+          },
+          setHandler:function(){
+            this.clearHandler()
+            timer = setInterval(this.nextHandler,interval)
+          },
+          clearHandler:function(){
+            clearInterval(timer)
+          }
+        },
+        created:function(){
+          var self = this
+          superagent.get('./api/imgData.json').end(function(err, res){
+            if(err){
+              alert("Error")
+            }else{
+              self.imgList = JSON.parse(res.text).list
+              self.$nextTick(function(){
+                if(self.imgList && self.imgList.length){
+                  self.setHandler()
+                }
+              })
+            }
+          });
+        }
+      })
+    })(window)
+  </script>
+</body>
+</html>

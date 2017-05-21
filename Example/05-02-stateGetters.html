@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>05-02-stateGetters</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/layout.css">
+  <style type="text/css">
+    [v-cloak]{
+      display: none;
+    }
+    body{
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <h1>{{ message }}</h1>
+    <p>{{ upMessage }}</p>
+    <p>{{ lowMessage }}</p>
+    <p>====================</p>
+    <message></message>
+  </div>
+  <script src="js/vue.js"></script>
+  <script src="js/vuex.js"></script>
+  <script>
+    var store = new Vuex.Store({
+      state: {
+        message: 'Hello Vue!!!'
+      },
+      getters: {
+        upMessage:function(state){
+          return state.message.toUpperCase()
+        },
+        lowMessage:function(state){
+          return state.message.toLowerCase()
+        },
+      }
+    })
+
+    var storeMixin = {
+      computed:{
+        message:function(){
+          return this.$store.state.message
+        },
+        upMessage:function(){
+          return this.$store.getters.upMessage
+        },
+        lowMessage:function(){
+          return this.$store.getters.lowMessage
+        }
+      }
+    }
+    var upMessage = {
+      mixins: [storeMixin],
+      template:`
+        <p>{{ upMessage }}</p>
+      `
+    }
+    var lowMessage = {
+      mixins: [storeMixin],
+      template:`
+        <p>{{ lowMessage }}</p>
+      `
+    }
+    Vue.component('message',{
+      mixins: [storeMixin],
+      components:{
+        upMessage:upMessage,
+        lowMessage:lowMessage
+      },
+      template:`
+        <div>
+          <h1>{{ message }}</h1>
+          <up-message></up-message>
+          <low-message></low-message>
+        </div>
+      `
+    })
+
+    var vm = new Vue({
+      mixins: [storeMixin],
+      el:'#app',
+      store:store
+    })
+  </script>
+</body>
+</html>

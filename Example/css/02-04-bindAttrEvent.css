@@ -1,0 +1,30 @@
+[v-cloak]{
+  display: none;
+}
+#app{
+  width:900px;
+}
+.img{
+  position: relative;
+  display: inline-block;
+  margin: 5px;
+  width: 200px;
+  height: 100px;
+  overflow: hidden;
+  user-select: none;
+  box-sizing: border-box;
+  border:5px solid;
+}
+.mask{
+  position: absolute;
+  top:0%;
+  left:0%;
+  width:100%;
+  height:100%;
+  color: #ffffff;
+  background-color:rgba(0,0,0,0.5);
+  display: none;
+}
+.disabled .mask{
+  display:block;
+}

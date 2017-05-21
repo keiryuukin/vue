@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>02-09-arrayFilter</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/layout.css">
+  <style type="text/css">
+    [v-cloak]{
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <input type="text" placeholder="請輸入關鍵字" v-model="filter">
+    <ul>
+      <li v-for="item in filterList">
+        {{ item }}
+      </li>
+    </ul>
+  </div>
+  <script src="js/vue.js"></script>
+  <script>
+    (function(window){
+      var data = {
+        classList:[
+          'Sass & Compass',
+          'javascript & jQuery',
+          'jQuery DOM',
+          'Vue.js',
+          'PHP & MySQL'
+        ],
+        filter:''
+      }
+      var vm = new Vue({
+        el:'#app',
+        data:data,
+        computed:{
+          filterList:function(){
+            var self = this
+            return self.classList.filter(function(name){
+              return name.toLowerCase()
+                .indexOf(self.filter.toLowerCase()) != -1
+            })
+          }
+        }
+      })
+    })(window)
+  </script>
+</body>
+</html>
